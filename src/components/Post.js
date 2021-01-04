@@ -5,10 +5,8 @@ const Post = ({title, description, image}) => {
         <div className={classes.Post}>
             <div className={classes.Post__image} style={{backgroundImage :`url(${image})`}}></div>
             <div className={classes.Post__info}>
-                <h2 className={classes.Post__title}>{title}</h2>
-                <p className={classes.Post__description}>
-                    {description}
-                </p>
+                <h4 className={classes.Post__title}>{title}</h4>
+                <p className={classes.Post__description}>{description}</p>
             </div>
         </div>
     );

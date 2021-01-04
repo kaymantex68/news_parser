@@ -4,7 +4,8 @@
     display: flex;
     margin: 30px;
     box-shadow: 0 0 10px slategray;
-    height: 250px;
+    height: 200px;
+    overflow: hidden;
 }
 
 .Post__image{
