@@ -11,30 +11,27 @@ class App extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      data: [],
-    };
-    console.log(props);
   }
 
-  componentWillMount() {
+  fetchPosts() {
+    const {setPosts}=this.props;
     axios
       .get('https://5ff4330016cf4f0017c1fdb4.mockapi.io/posts')
       .then(({ data }) => {
-        this.setState({
-          data
-        })
+        setPosts(data);
       });
   }
 
 
 
   render() {
+    const { posts } = this.props;
+    const { items } = posts;
     return (
       <div>
-        <button>Получить записи</button>
+        <button onClick={this.fetchPosts.bind(this)}>Получить записи</button>
         {
-          !this.state.data.length ? <span>Loading...</span> : this.state.data.map(({ title, description, image }, key) => (
+          !items.length ? <span>Loading...</span> : items.map(({ title, description, image }, key) => (
             <Post
               key={`Post_key_${key}`}
               title={title}
@@ -50,9 +47,8 @@ class App extends Component {
 }
 
 const state = props => {
- console.log(props)
+  console.log(props)
   return {
-    loading: true,
     ...props,
   };
 };

@@ -1,6 +1,6 @@
 
 const initialState = {
-    posts: [],
+    items: [],
 }
 
 export default function Posts (state = initialState, action) {
@@ -8,7 +8,7 @@ export default function Posts (state = initialState, action) {
         case 'SET_POSTS':
             return {
                 ...state,
-                posts: action.payload,
+                items: action.payload,
             };
         case 'REMOVE_POSTS':
             return {
