@@ -2,7 +2,7 @@ const initialState ={
     region : 'ING',
 }
 
-export default function (state = initialState, action){
+export default function Regions (state = initialState, action){
     switch (action.type) {
         case 'CHANGE_REGION':
             return {

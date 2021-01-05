@@ -1,8 +1,9 @@
+
 const initialState = {
     posts: [],
 }
 
-export default function (state = initialState, action) {
+export default function Posts (state = initialState, action) {
     switch (action.type) {
         case 'SET_POSTS':
             return {
