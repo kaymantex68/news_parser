@@ -9,22 +9,24 @@ import classes from './App.module.css';
 
 class App extends Component {
 
-  constructor(props) {
-    super(props);
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
 
   fetchPosts() {
-    const {setPosts}=this.props;
+    const { setPosts, testPost } = this.props;
     axios
       .get('https://5ff4330016cf4f0017c1fdb4.mockapi.io/posts')
       .then(({ data }) => {
         setPosts(data);
+        testPost();
       });
   }
 
 
 
   render() {
+    console.info('APP PROPS: ', this.props);
     const { posts } = this.props;
     const { items } = posts;
     return (
@@ -47,8 +49,11 @@ class App extends Component {
 }
 
 const state = props => {
-  console.log(props)
+  
   return {
+    L:0,
+    A:55,
+    C:'s',
     ...props,
   };
 };
@@ -59,6 +64,7 @@ const actions = (dispatch) => ({
     type: 'SET_POSTS',
     payload: data,
   }),
+  testPost: ()=>{console.info('TESTPOSTS')},
 });
 
 

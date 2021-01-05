@@ -9,15 +9,16 @@ import store from './store';
 
 store.subscribe(() => {
   alert('стора изменилась');
-  console.log(store);
+  console.info('STORE: ', store.getState());
 });
 
 
+console.info('STORE: ', store.getState());
 
 
 render(
   <Provider store={store}>
-    <App />
+    <App getPost={()=>'test'}/>
   </Provider>,
   document.getElementById('root')
 )
