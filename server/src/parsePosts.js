@@ -1,11 +1,12 @@
 const unirest = require('unirest');
 const cheerio = require('cheerio');
 
+import elems from './config';
 
 function parsePost(url, elems) {
     return new Promise((resolve, reject) => {
-        unirest.get(url).end(({body,error}) => {
-            if(error) reject(error);
+        unirest.get(url).end(({ body, error }) => {
+            if (error) reject(error);
             const $ = cheerio.load(body);
 
             const domain = url.match(/\/\/(.*?)\//)[1];
@@ -38,14 +39,22 @@ function parseLinks(url, className, maxLinks) {
             })
             // console.log(links);
             resolve(links);
-            if (!links.length) reject(console.log("fuck off, bitch"));
+            if (!links.length) reject({error: "empty links"});
         })
-        
-        
+
+
     })
-    
+
 }
 
+async function fetchLinks(links) {
+    for (let i = 0; i < links.length; i++) {
+        const post = await parsePost(
+            links[i],
+            elems.OnlineTambov,
+        ).then(post => post );
+        console.log(post)
+    }
+}
 
-
-export { parsePost, parseLinks }
+export { parsePost, parseLinks, fetchLinks }
