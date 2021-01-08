@@ -3,6 +3,14 @@ const cheerio = require('cheerio');
 
 import elems from './config';
 
+const delay = (i, count, ms) =>{return new Promise((resolve,reject) => setTimeout(() => {
+    console.log(
+        `index: ${i};
+        count: ${count}; `
+    )
+    resolve();
+}, ms));} 
+
 function parsePost(url, elems) {
     return new Promise((resolve, reject) => {
         unirest.get(url).end(({ body, error }) => {
@@ -10,7 +18,7 @@ function parsePost(url, elems) {
             const $ = cheerio.load(body);
 
             const domain = url.match(/\/\/(.*?)\//)[1];
-            const title = $(elems.item).text().trim();
+            const title = $(elems.title).text().trim();
             let image = $(elems.image).attr('src');
             image = image.indexOf('http') >= 0 ? image : `http://${domain}${image}`;
             const text = $(elems.text).text().trim();
@@ -39,7 +47,7 @@ function parseLinks(url, className, maxLinks) {
             })
             // console.log(links);
             resolve(links);
-            if (!links.length) reject({error: "empty links"});
+            if (!links.length) reject({ error: "empty links" });
         })
 
 
@@ -48,13 +56,21 @@ function parseLinks(url, className, maxLinks) {
 }
 
 async function fetchLinks(links) {
-    for (let i = 0; i < links.length; i++) {
-        const post = await parsePost(
-            links[i],
-            elems.OnlineTambov,
-        ).then(post => post );
-        console.log(post)
-    }
+    return new Promise(async (resolve, reject) => {
+        let posts = [];
+        let count = links.length;
+        for (let i = 0; i < count; i++) {
+            const post = await parsePost(
+                links[i],
+                elems.OnlineTambov,
+            ).then(post => post);
+            posts.push(post);
+            await delay(i+1, count, 300);
+        }
+        // if (!posts.length) reject({ empty: "empty" });
+        resolve(posts);
+    })
+
 }
 
 export { parsePost, parseLinks, fetchLinks }

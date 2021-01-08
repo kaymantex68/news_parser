@@ -1,5 +1,5 @@
 const initialState ={
-    region : 'ING',
+    region : 'TAM1',
 }
 
 export default function Regions (state = initialState, action){

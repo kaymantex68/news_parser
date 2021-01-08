@@ -18,41 +18,70 @@ var _promise = require('babel-runtime/core-js/promise');
 var _promise2 = _interopRequireDefault(_promise);
 
 var fetchLinks = function () {
-    var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(links) {
-        var i, post;
-        return _regenerator2.default.wrap(function _callee$(_context) {
+    var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2(links) {
+        var _this = this;
+
+        return _regenerator2.default.wrap(function _callee2$(_context2) {
             while (1) {
-                switch (_context.prev = _context.next) {
+                switch (_context2.prev = _context2.next) {
                     case 0:
-                        i = 0;
+                        return _context2.abrupt('return', new _promise2.default(function () {
+                            var _ref3 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(resolve, reject) {
+                                var posts, count, i, post;
+                                return _regenerator2.default.wrap(function _callee$(_context) {
+                                    while (1) {
+                                        switch (_context.prev = _context.next) {
+                                            case 0:
+                                                posts = [];
+                                                count = links.length;
+                                                i = 0;
+
+                                            case 3:
+                                                if (!(i < count)) {
+                                                    _context.next = 13;
+                                                    break;
+                                                }
+
+                                                _context.next = 6;
+                                                return parsePost(links[i], _config2.default.OnlineTambov).then(function (post) {
+                                                    return post;
+                                                });
+
+                                            case 6:
+                                                post = _context.sent;
+
+                                                posts.push(post);
+                                                _context.next = 10;
+                                                return delay(i + 1, count, 300);
+
+                                            case 10:
+                                                i++;
+                                                _context.next = 3;
+                                                break;
+
+                                            case 13:
+                                                // if (!posts.length) reject({ empty: "empty" });
+                                                resolve(posts);
+
+                                            case 14:
+                                            case 'end':
+                                                return _context.stop();
+                                        }
+                                    }
+                                }, _callee, _this);
+                            }));
+
+                            return function (_x2, _x3) {
+                                return _ref3.apply(this, arguments);
+                            };
+                        }()));
 
                     case 1:
-                        if (!(i < links.length)) {
-                            _context.next = 9;
-                            break;
-                        }
-
-                        _context.next = 4;
-                        return parsePost(links[i], _config2.default.OnlineTambov).then(function (post) {
-                            return post;
-                        });
-
-                    case 4:
-                        post = _context.sent;
-
-                        console.log(post);
-
-                    case 6:
-                        i++;
-                        _context.next = 1;
-                        break;
-
-                    case 9:
                     case 'end':
-                        return _context.stop();
+                        return _context2.stop();
                 }
             }
-        }, _callee, this);
+        }, _callee2, this);
     }));
 
     return function fetchLinks(_x) {
@@ -69,6 +98,15 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var unirest = require('unirest');
 var cheerio = require('cheerio');
 
+var delay = function delay(i, count, ms) {
+    return new _promise2.default(function (resolve, reject) {
+        return setTimeout(function () {
+            console.log('index: ' + i + ';\n        count: ' + count + '; ');
+            resolve();
+        }, ms);
+    });
+};
+
 function parsePost(url, elems) {
     return new _promise2.default(function (resolve, reject) {
         unirest.get(url).end(function (_ref) {
@@ -79,7 +117,7 @@ function parsePost(url, elems) {
             var $ = cheerio.load(body);
 
             var domain = url.match(/\/\/(.*?)\//)[1];
-            var title = $(elems.item).text().trim();
+            var title = $(elems.title).text().trim();
             var image = $(elems.image).attr('src');
             image = image.indexOf('http') >= 0 ? image : 'http://' + domain + image;
             var text = $(elems.text).text().trim();

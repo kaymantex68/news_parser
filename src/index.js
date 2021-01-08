@@ -5,11 +5,11 @@ import { Provider } from 'react-redux';
 import App from './App';
 import store from './store';
 
-
+import '../node_modules/semantic-ui-css/semantic.min.css';
 
 store.subscribe(() => {
-  alert('стора изменилась');
-  console.info('STORE: ', store.getState());
+  // alert('стора изменилась');
+  console.info('UPDATE STORE: ', store.getState());
 });
 
 

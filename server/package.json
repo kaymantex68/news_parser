@@ -7,5 +7,8 @@
     "start": "babel src --out-dir dist && node dist/index.js"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "iconv-lite": "^0.6.2"
+  }
 }

@@ -1,6 +1,6 @@
 const elems = {
     TvTambov: {
-        title: '.post-title.entry-title',
+        title: '.post-title .entry-title',
         image: '.attachment-jannah-image-post.size-jannah-image-post.wp-post-image',
         text: '.entry-content.entry.clearfix',
         views: '.meta-views.meta-item'
